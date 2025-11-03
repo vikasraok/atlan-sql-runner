@@ -80,7 +80,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const toggleSidebar = useCallback(() => dispatch({ type: 'TOGGLE_SIDEBAR' }), []);
     const toggleHistory = useCallback(() => dispatch({ type: 'TOGGLE_HISTORY' }), []);
     const updateTabSql = useCallback((id: number, sql: string) => dispatch({ type: 'UPDATE_SQL', id, sql }), []);
-    const updateTabCursor = useCallback((id: number, start: number | null, end: number | null) => dispatch({ type: 'UPDATE_CURSOR', id, start, end }), []);
 
     const value = useMemo(
         () => ({
@@ -90,13 +89,12 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             closeTab,
             setActiveId,
             updateTabSql,
-            updateTabCursor,
             showSidebar: state.showSidebar,
             toggleSidebar,
             showHistory: state.showHistory,
             toggleHistory,
         }),
-        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory, updateTabSql, updateTabCursor]
+        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory, updateTabSql]
     );
 
     return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
