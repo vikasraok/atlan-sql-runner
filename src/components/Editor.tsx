@@ -1,15 +1,10 @@
 import React from 'react';
 
-interface EditorProps {
-  content: string;
-  onChange: (newContent: string) => void;
-}
 
-const Editor: React.FC<EditorProps> = ({ content, onChange }) => {
+
+const Editor: React.FC<unknown> = () => {
   return (
     <textarea
-      value={content}
-      onChange={(e) => onChange(e.target.value)}
       style={{ width: '100%', height: '300px' }}
     />
   );
