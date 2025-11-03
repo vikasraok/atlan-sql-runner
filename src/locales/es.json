@@ -17,5 +17,14 @@
   "delete": "Eliminar",
   "edit": "Editar",
   "run": "Ejecutar",
-  "stop": "Detener"
+  "stop": "Detener",
+  "hideSavedQueries": "Ocultar consultas guardadas",
+  "showSavedQueries": "Mostrar consultas guardadas",
+  "hideQueryHistory": "Ocultar historial de consultas",
+  "showQueryHistory": "Mostrar historial de consultas",
+  "selectLanguage": "Seleccionar idioma",
+  "addTab": "Agregar pestaña",
+  "tab1Label": "Pestaña de consulta 1",
+  "tab2Label": "Pestaña de consulta 2",
+  "tab3Label": "Pestaña de consulta 3"
 }

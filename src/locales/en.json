@@ -5,9 +5,7 @@
   "sidebar": "Sidebar",
   "result": "Result",
   "historyTitle": "History",
-  "tab1": "Tab 1",
-  "tab2": "Tab 2",
-  "tab3": "Tab 3",
+  "tab": "New Tab",
   "sqlEditorPlaceholder": "Enter your SQL query here...",
   "loading": "Loading...",
   "error": "Error",
@@ -17,5 +15,12 @@
   "delete": "Delete",
   "edit": "Edit",
   "run": "Run",
-  "stop": "Stop"
+  "stop": "Stop",
+  "hideSavedQueries": "Hide saved queries",
+  "showSavedQueries": "Show saved queries",
+  "hideQueryHistory": "Hide query history",
+  "showQueryHistory": "Show query history",
+  "selectLanguage": "Select language",
+  "addTab": "Add tab",
+  "tabLabel": "Query tab"
 }

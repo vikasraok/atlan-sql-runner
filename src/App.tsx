@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Database } from 'lucide-react';
 import Editor from './components/Editor';
 import Sidebar from './components/Sidebar';
@@ -7,20 +6,13 @@ import History from './components/History';
 import Tabs from './components/Tabs';
 import { LocalizationProvider } from './contexts/LocalizationContext';
 import { useTranslation } from './hooks/useTranslation';
+import { AppStateProvider } from './contexts/AppStateProvider';
+import { useAppState } from './hooks/useAppState';
 import LanguageSelector from './components/LanguageSelector';
 
 function AppContent() {
   const { t } = useTranslation();
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [showHistory, setShowHistory] = useState(false);
-
-  const toggleSidebar = () => {
-    setShowSidebar(!showSidebar);
-  };
-
-  const toggleHistory = () => {
-    setShowHistory(!showHistory);
-  };
+  const { showSidebar, toggleSidebar, showHistory, toggleHistory } = useAppState();
 
   return (
     <div className="h-screen flex flex-col bg-slate-50 text-slate-700">
@@ -40,6 +32,8 @@ function AppContent() {
                   : 'bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400'
                 }`}
               onClick={toggleSidebar}
+              aria-pressed={showSidebar}
+              aria-label={showSidebar ? t('hideSavedQueries') : t('showSavedQueries')}
             >
               {t('savedQueries')}
             </button>
@@ -51,6 +45,8 @@ function AppContent() {
                   : 'bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400'
                 }`}
               onClick={toggleHistory}
+              aria-pressed={showHistory}
+              aria-label={showHistory ? t('hideQueryHistory') : t('showQueryHistory')}
             >
               {t('history')}
             </button>
@@ -64,12 +60,12 @@ function AppContent() {
             <Sidebar />
           </div>
         )}
-        <main className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 flex flex-col overflow-hidden mx-2 gap-1 min-w-0">
           <Tabs />
-          <section className="bg-white border-b border-slate-200">
+          <section className='flex-1 min-w-0' >
             <Editor />
           </section>
-          <section className="flex-1 bg-white overflow-hidden">
+          <section className="flex-2 overflow-hidden">
             <Result />
           </section>
         </main>
@@ -86,7 +82,9 @@ function AppContent() {
 function App() {
   return (
     <LocalizationProvider>
-      <AppContent />
+      <AppStateProvider>
+        <AppContent />
+      </AppStateProvider>
     </LocalizationProvider>
   );
 }

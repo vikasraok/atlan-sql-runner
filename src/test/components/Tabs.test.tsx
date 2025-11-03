@@ -1,74 +1,71 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import Tabs from '../../components/Tabs'
+import { vi } from 'vitest'
 
-// Mock the useTranslation hook
+// Mock the useTranslation hook before importing components so the mock is applied to providers/components on import
 vi.mock('../../hooks/useTranslation', () => ({
     useTranslation: () => ({
-        t: (key: string) => key, // Return the key as-is for testing
+        t: (key: string) => key,
     }),
 }))
 
-describe('Tabs Component', () => {
-    it('renders without crashing', () => {
-        render(<Tabs />)
-        const tab1 = screen.getByTestId('tab-1')
-        expect(tab1).toBeInTheDocument()
-    })
+import { render, screen, fireEvent } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import type { ReactElement } from 'react'
+import Tabs from '../../components/Tabs'
+import { LocalizationProvider } from '../../contexts/LocalizationContext'
+import { AppStateProvider } from '../../contexts/AppStateProvider'
 
-    it('renders all three tabs', () => {
-        render(<Tabs />)
+const renderWithProviders = (ui: ReactElement) => {
+    return render(
+        <LocalizationProvider>
+            <AppStateProvider>{ui}</AppStateProvider>
+        </LocalizationProvider>
+    )
+}
 
+describe('Tabs Component (provider-backed)', () => {
+    it('renders initial tab', () => {
+        renderWithProviders(<Tabs />)
         expect(screen.getByTestId('tab-1')).toBeInTheDocument()
+    })
+
+    it('adds a new tab when add button is clicked', () => {
+        renderWithProviders(<Tabs />)
+        const add = screen.getByTestId('add-tab-button')
+        fireEvent.click(add)
+        // New tab should be present (id 2)
         expect(screen.getByTestId('tab-2')).toBeInTheDocument()
-        expect(screen.getByTestId('tab-3')).toBeInTheDocument()
     })
 
-    it('has correct flex layout container', () => {
-        render(<Tabs />)
-        const container = screen.getByTestId('tab-1').parentElement
-        expect(container).toHaveClass('flex')
+    it('closes a tab when close button is clicked', () => {
+        renderWithProviders(<Tabs />)
+        const add = screen.getByTestId('add-tab-button')
+        fireEvent.click(add)
+
+        const tab2 = screen.getByTestId('tab-2')
+        expect(tab2).toBeInTheDocument()
+
+        const close = screen.getByTestId('tab-2-close')
+        fireEvent.click(close)
+
+        // tab-2 should be removed
+        expect(screen.queryByTestId('tab-2')).not.toBeInTheDocument()
     })
 
-    it('applies correct CSS classes to tabs', () => {
-        render(<Tabs />)
+    it('sets active tab when clicking a tab', () => {
+        renderWithProviders(<Tabs />)
+        const add = screen.getByTestId('add-tab-button')
+        fireEvent.click(add) // create tab-2
 
         const tab1 = screen.getByTestId('tab-1')
         const tab2 = screen.getByTestId('tab-2')
-        const tab3 = screen.getByTestId('tab-3')
 
-        // Check that all tabs have the basic tab classes
-        expect(tab1).toHaveClass('tab', 'w-32', 'px-4', 'py-2', 'cursor-pointer')
-        expect(tab2).toHaveClass('tab', 'w-32', 'px-4', 'py-2', 'cursor-pointer')
-        expect(tab3).toHaveClass('tab', 'w-32', 'px-4', 'py-2', 'cursor-pointer')
-    })
+        // Initially activeId should be 2 (last added)
+        expect(tab2).toHaveAttribute('aria-selected', 'true')
 
-    it('shows Tab 3 as active (with blue border)', () => {
-        render(<Tabs />)
-
-        const tab1 = screen.getByTestId('tab-1')
-        const tab2 = screen.getByTestId('tab-2')
-        const tab3 = screen.getByTestId('tab-3')
-
-        // Tab 3 should have the active border
-        expect(tab3).toHaveClass('border-b-2', 'border-blue-500')
-
-        // Tab 1 and Tab 2 should have transparent border
-        expect(tab1).toHaveClass('border-b-2', 'border-transparent')
-        expect(tab2).toHaveClass('border-b-2', 'border-transparent')
-    })
-
-    it('has hover effects on tabs', () => {
-        render(<Tabs />)
-
-        const tab1 = screen.getByTestId('tab-1')
-        expect(tab1).toHaveClass('hover:border-blue-500')
-    })
-
-    it('renders exactly 3 tab elements', () => {
-        render(<Tabs />)
-
-        const tabs = screen.getAllByTestId(/^tab-\d+$/)
-        expect(tabs).toHaveLength(3)
+        // Click tab1 -> becomes active
+        fireEvent.click(tab1)
+        expect(tab1).toHaveAttribute('aria-selected', 'true')
+        expect(tab2).toHaveAttribute('aria-selected', 'false')
     })
 })
+// (mock hoisted to top)

@@ -3,7 +3,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import type { Locale } from '../locales';
 
 const LanguageSelector: React.FC = () => {
-    const { locale, setLocale } = useTranslation();
+    const { locale, setLocale, t } = useTranslation();
 
     const languages: { code: Locale; name: string }[] = [
         { code: 'en', name: 'English' },
@@ -18,6 +18,7 @@ const LanguageSelector: React.FC = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-md text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400 appearance-none pr-8 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 data-testid="language-selector"
                 name="localization"
+                aria-label={t('selectLanguage')}
             >
                 {languages.map((lang) => (
                     <option key={lang.code} value={lang.code}>

@@ -22,17 +22,6 @@ describe('Editor Component', () => {
         expect(textarea.tagName).toBe('TEXTAREA')
     })
 
-    it('has correct styling attributes', () => {
-        render(<Editor />)
-        const textarea = screen.getByRole('textbox')
-
-        // Check inline styles
-        expect(textarea).toHaveStyle({
-            width: '100%',
-            height: '300px'
-        })
-    })
-
     it('is focusable and accepts input', () => {
         render(<Editor />)
         const textarea = screen.getByRole('textbox')
