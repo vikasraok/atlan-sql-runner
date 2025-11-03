@@ -1,7 +1,7 @@
 
 import { createContext } from 'react';
 
-type Tab = { id: number; title: string };
+export type Tab = { id: number; title: string; sql?: string; result?: unknown[]; };
 
 export type AppState = {
     tabs: Tab[];
@@ -9,6 +9,7 @@ export type AppState = {
     addTab: () => void;
     closeTab: (id: number) => void;
     setActiveId: (id: number) => void;
+    updateTabSql: (id: number, sql: string) => void;
     showSidebar: boolean;
     toggleSidebar: () => void;
     showHistory: boolean;

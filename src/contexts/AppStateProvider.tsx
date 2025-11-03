@@ -1,9 +1,8 @@
 import { useReducer, useRef, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { AppStateContext } from './AppStateContext';
+import type { Tab } from './AppStateContext';
 import { useTranslation } from '../hooks/useTranslation';
-
-type Tab = { id: number; title: string };
 
 type State = {
     tabs: Tab[];
@@ -16,6 +15,7 @@ type Action =
     | { type: 'ADD_TAB'; title: string; id: number }
     | { type: 'CLOSE_TAB'; id: number }
     | { type: 'SET_ACTIVE'; id: number }
+    | { type: 'UPDATE_SQL'; id: number; sql: string }
     | { type: 'TOGGLE_SIDEBAR' }
     | { type: 'TOGGLE_HISTORY' };
 
@@ -38,6 +38,11 @@ const reducer = (state: State, action: Action): State => {
         }
         case 'SET_ACTIVE':
             return { ...state, activeId: action.id };
+        case 'UPDATE_SQL': {
+            const { id, sql } = action;
+            const tabs = state.tabs.map((t) => (t.id === id ? { ...t, sql } : t));
+            return { ...state, tabs };
+        }
         case 'TOGGLE_SIDEBAR':
             return { ...state, showSidebar: !state.showSidebar };
         case 'TOGGLE_HISTORY':
@@ -46,14 +51,13 @@ const reducer = (state: State, action: Action): State => {
             return state;
     }
 };
-
 export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { t } = useTranslation();
 
     const nextId = useRef(2);
 
     const initialState: State = {
-        tabs: [{ id: 1, title: t('tab') }],
+        tabs: [{ id: 1, title: t('tab'), sql: '' }],
         activeId: 1,
         showSidebar: true,
         showHistory: false,
@@ -75,6 +79,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     const toggleSidebar = useCallback(() => dispatch({ type: 'TOGGLE_SIDEBAR' }), []);
     const toggleHistory = useCallback(() => dispatch({ type: 'TOGGLE_HISTORY' }), []);
+    const updateTabSql = useCallback((id: number, sql: string) => dispatch({ type: 'UPDATE_SQL', id, sql }), []);
+    const updateTabCursor = useCallback((id: number, start: number | null, end: number | null) => dispatch({ type: 'UPDATE_CURSOR', id, start, end }), []);
 
     const value = useMemo(
         () => ({
@@ -83,12 +89,14 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             addTab,
             closeTab,
             setActiveId,
+            updateTabSql,
+            updateTabCursor,
             showSidebar: state.showSidebar,
             toggleSidebar,
             showHistory: state.showHistory,
             toggleHistory,
         }),
-        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory]
+        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory, updateTabSql, updateTabCursor]
     );
 
     return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;

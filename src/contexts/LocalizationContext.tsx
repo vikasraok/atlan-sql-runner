@@ -25,7 +25,7 @@ export const LocalizationProvider: React.FC<LocalizationProviderProps> = ({
     const [locale, setLocale] = useState<Locale>(defaultLocale);
 
     const t = (key: TranslationKey): string => {
-        return locales[locale][key];
+        return locales[locale][key as keyof typeof locales[typeof locale]];
     };
 
     return (

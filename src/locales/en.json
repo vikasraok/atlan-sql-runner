@@ -22,5 +22,6 @@
   "showQueryHistory": "Show query history",
   "selectLanguage": "Select language",
   "addTab": "Add tab",
-  "tabLabel": "Query tab"
+  "tabLabel": "Query tab",
+  "noResult": "No result"
 }

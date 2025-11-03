@@ -26,5 +26,6 @@
   "addTab": "Agregar pestaña",
   "tab1Label": "Pestaña de consulta 1",
   "tab2Label": "Pestaña de consulta 2",
-  "tab3Label": "Pestaña de consulta 3"
+  "tab3Label": "Pestaña de consulta 3",
+  "noResult": "Sin resultado"
 }
