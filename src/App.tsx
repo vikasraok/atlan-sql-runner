@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Database } from 'lucide-react';
 import Editor from './components/Editor';
 import Sidebar from './components/Sidebar';
 import Result from './components/Result';
 import History from './components/History';
 import Tabs from './components/Tabs';
+import { LocalizationProvider } from './contexts/LocalizationContext';
+import { useTranslation } from './hooks/useTranslation';
+import LanguageSelector from './components/LanguageSelector';
 
-function App() {
+function AppContent() {
+  const { t } = useTranslation();
   const [showSidebar, setShowSidebar] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
 
@@ -24,7 +28,7 @@ function App() {
         <div className="flex justify-between items-center px-4 h-16">
           <div className="flex items-center gap-3">
             <Database className="w-6 h-6 text-blue-500" />
-            <h1 className="text-xl font-semibold text-slate-900">Atlan SQL Runner</h1>
+            <h1 data-testid="app-title" className="text-xl font-semibold text-slate-900">{t('appTitle')}</h1>
           </div>
 
           <div className="flex gap-3">
@@ -37,7 +41,7 @@ function App() {
                 }`}
               onClick={toggleSidebar}
             >
-              Saved Queries
+              {t('savedQueries')}
             </button>
             <button
               data-testid="toggle-history-button"
@@ -48,14 +52,17 @@ function App() {
                 }`}
               onClick={toggleHistory}
             >
-              History
+              {t('history')}
             </button>
+            <LanguageSelector />
           </div>
         </div>
       </header>
       <div className="flex-1 flex overflow-hidden">
         {showSidebar && (
-          <Sidebar />
+          <div data-testid="sidebar-container">
+            <Sidebar />
+          </div>
         )}
         <main className="flex-1 flex flex-col overflow-hidden">
           <Tabs />
@@ -67,10 +74,20 @@ function App() {
           </section>
         </main>
         {showHistory && (
-          <History />
+          <div data-testid="history-container">
+            <History />
+          </div>
         )}
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LocalizationProvider>
+      <AppContent />
+    </LocalizationProvider>
   );
 }
 

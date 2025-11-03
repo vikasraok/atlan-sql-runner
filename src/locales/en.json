@@ -1,0 +1,21 @@
+{
+  "appTitle": "Atlan SQL Runner",
+  "savedQueries": "Saved Queries",
+  "history": "History",
+  "sidebar": "Sidebar",
+  "result": "Result",
+  "historyTitle": "History",
+  "tab1": "Tab 1",
+  "tab2": "Tab 2",
+  "tab3": "Tab 3",
+  "sqlEditorPlaceholder": "Enter your SQL query here...",
+  "loading": "Loading...",
+  "error": "Error",
+  "success": "Success",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "run": "Run",
+  "stop": "Stop"
+}

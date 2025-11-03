@@ -1,0 +1,21 @@
+{
+  "appTitle": "Ejecutor SQL de Atlan",
+  "savedQueries": "Consultas Guardadas",
+  "history": "Historial",
+  "sidebar": "Barra Lateral",
+  "result": "Resultado",
+  "historyTitle": "Historial",
+  "tab1": "Pestaña 1",
+  "tab2": "Pestaña 2",
+  "tab3": "Pestaña 3",
+  "sqlEditorPlaceholder": "Ingresa tu consulta SQL aquí...",
+  "loading": "Cargando...",
+  "error": "Error",
+  "success": "Éxito",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "delete": "Eliminar",
+  "edit": "Editar",
+  "run": "Ejecutar",
+  "stop": "Detener"
+}
