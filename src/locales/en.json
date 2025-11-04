@@ -5,7 +5,7 @@
   "sidebar": "Sidebar",
   "result": "Result",
   "historyTitle": "History",
-  "tab": "New Tab",
+  "tab": "New Query",
   "sqlEditorPlaceholder": "Enter your SQL query here...",
   "loading": "Loading...",
   "error": "Error",
