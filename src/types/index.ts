@@ -1,4 +1,4 @@
-type SQLStatusValues = 'idle' | 'running' | 'success' | 'error' | 'cancelled';
+export type SQLStatusValues = 'idle' | 'running' | 'success' | 'error' | 'cancelled';
 
 export interface QueryResult{
     id: string;
@@ -13,25 +13,25 @@ export interface HistoryItem{
     id: string;
     query: string;
     result: QueryResult | null;
-    executedAt: number;
+    executedAt: string;
     executionTime: number;
+    executor: string;
     rowCount: number;
     status: SQLStatusValues;
 }
 
 export interface SavedQuery{
     id: string;
-    name: string;
+    title: string;
     query: string;
     description?: string;
-    createdAt: number;
+    createdAt?: number;
 }
 
 export interface QueryTab{
-    id: string;
-    name: string;
-    query: string;
-    result: QueryResult | null;
-    isActive: boolean;
-    isSaved: boolean;
+    id: number;
+    title: string;
+    sql: string;
+    result?: QueryResult ;
+    isSaved?: boolean;
 }

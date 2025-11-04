@@ -7,7 +7,7 @@ import type { QueryResult } from '../types';
 const fetchQueryResult = async (queryId: string): Promise<QueryResult> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const result = generateLargeMockData();
+      const result = generateLargeMockData(Math.floor(100000 + Math.random() * 900000));
       if (result) {
         resolve({
           id: queryId.toString(),
@@ -36,7 +36,7 @@ const validateSql = (sql: string) => {
 
 const Editor: React.FC = () => {
   const { t } = useTranslation();
-  const { tabs, activeId, updateTabSql, setTabResult } = useAppState();
+  const { tabs, activeId, updateTabSql, setTabResult, updateTab } = useAppState();
   const active = tabs.find((x) => x.id === activeId);
 
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +63,10 @@ const Editor: React.FC = () => {
 
   const gutterRef = useRef<HTMLDivElement | null>(null);
 
+  const handleOuterDivClick = useCallback(() => {
+    textareaRef.current?.focus();
+  }, []);
+
   const runQuery = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -78,20 +82,24 @@ const Editor: React.FC = () => {
       try {
         const result = await fetchQueryResult(String(queryId)); // Ensure queryId is passed as a string
         setTabResult(active.id, result);
+        updateTab(active.sql ?? '', active.sql ?? '');
       } catch (error) {
         console.error(error);
       } finally {
         setIsExecuting(false); // Hide progress bar
       }
     },
-    [active, setTabResult, queryId]
+    [active, setTabResult, queryId, updateTab] // Added updateTab to the dependency array
   );
 
   const isButtonDisabled = !active?.sql || !!error;
 
   return (
     <form onSubmit={runQuery} className="flex flex-col h-1/3" data-testid="editor">
-      <div className="flex flex-row h-full relative overflow-x-hidden overflow-y-auto bg-white border-slate-200 border -my-px focus-within:border-blue-500">
+      <div
+        onClick={handleOuterDivClick}
+        className="flex flex-row flex-1/3 relative overflow-x-hidden overflow-y-auto bg-white border-slate-200 border -my-px focus-within:border-blue-500"
+      >
         <div ref={gutterRef} className="bg-slate-50 px-2 text-right text-sm text-slate-500 select-none overflow-visible leading-5 shrink-0" style={{ width: 48, paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
           {Array.from({ length: lines }).map((_, i) => (
             <div key={i} className="h-5">{i + 1}</div>

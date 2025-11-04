@@ -2,28 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useAppState } from "../hooks/useAppState";
 import { historyMockData } from "../mock/historyMockData";
 import { useTranslation } from "../hooks/useTranslation";
+import { mockQueryResults } from '../mock/data';
+import type { QueryResult } from "../types";
+import type { HistoryItem } from "../types";
 
-interface HistoryItem {
-  query: string;
-  resultRows: number;
-  executor: string;
-  dateExecuted: string;
-}
+const fetchMockQueryResult = async (queryId: string): Promise<QueryResult> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockQueryResults[queryId]);
+    }, 500); // Simulate network delay
+  });
+};
 
 const History: React.FC = () => {
   const { t } = useTranslation();
-  const { addTab, showHistory, toggleHistory } = useAppState();
+  const { addTab, showHistory, toggleHistory, setTabResult, activeId } = useAppState();
   const [searchTerm, setSearchTerm] = useState("");
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const fetchHistoryData = async () => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate network delay
+    setHistoryData(historyMockData);
+    setLoading(false);
+  };
   useEffect(() => {
-    const fetchHistoryData = async () => {
-      setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate network delay
-      setHistoryData(historyMockData);
-      setLoading(false);
-    };
     fetchHistoryData();
   }, []);
 
@@ -36,19 +39,31 @@ const History: React.FC = () => {
       return item.executor.toLowerCase().includes(userSearch);
     } else if (searchTerm.startsWith("@at:")) {
       const dateSearch = searchTerm.replace("@at:", "");
-      return item.dateExecuted === dateSearch;
+      return item.executedAt === dateSearch;
     } else {
       return (
         item.query.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.executor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.dateExecuted.includes(searchTerm)
+        item.executedAt.includes(searchTerm)
       );
     }
   });
+  useEffect(() => {
 
-  const handleCardClick = (query: string) => {
-    addTab(query, query);
+  })
+  const handleCardClick = (item: HistoryItem) => {
+    addTab(item.query, item.query)
+    // Wait for the state to update before fetching the query result
+    setTimeout(() => {
+      fetchMockQueryResult(item.id).then((queryData) => {
+        if (queryData) {
+          console.log('Fetched query data:', queryData, activeId);
+          setTabResult(activeId, queryData);
+        }
+      });
+    }, 0); // Use a timeout to ensure state update is complete
   };
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -90,7 +105,7 @@ const History: React.FC = () => {
                 {filteredHistory.map((item, index) => (
                   <div
                     key={index}
-                    onClick={() => handleCardClick(item.query)}
+                    onClick={() => handleCardClick(item)}
                     className="p-4 mb-4 border border-slate-300 rounded shadow-sm cursor-pointer hover:bg-gray-100"
                   >
                     <div className="text-sm text-slate-700 mb-2">
@@ -99,13 +114,13 @@ const History: React.FC = () => {
                         : item.query}
                     </div>
                     <div className="text-sm text-slate-500">
-                      {t("result")}: {item.resultRows}
+                      {t("result")}: {item.rowCount}
                     </div>
                     <div className="text-sm text-slate-500">
                       {t("executor")}: {item.executor}
                     </div>
                     <div className="text-sm text-slate-500">
-                      {t("date")}: {item.dateExecuted}
+                      {t("date")}: {item.executedAt}
                     </div>
                   </div>
                 ))}

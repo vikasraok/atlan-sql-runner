@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "../hooks/useTranslation";
 import { mockSavedQueries } from "../mock/savedQueries";
 import { useAppState } from '../hooks/useAppState';
-
-type SavedQuery = {
-  title: string;
-  sql: string;
-};
+import type { SavedQuery } from "../types";
 
 const Sidebar: React.FC = () => {
   const { t } = useTranslation();
@@ -33,7 +29,7 @@ const Sidebar: React.FC = () => {
   );
 
   const handleQueryClick = (query: SavedQuery) => {
-    updateTab(query.title, query.sql); // Pass title as tab title
+    updateTab(query.title, query.query); // Pass title as tab title
   };
 
   return (
@@ -64,7 +60,7 @@ const Sidebar: React.FC = () => {
                       onClick={() => handleQueryClick(query)}
                     >
                       <div className="font-bold">{query.title}</div>
-                      <div className="text-sm text-gray-500">{query.sql}</div>
+                      <div className="text-sm text-gray-500">{query.query}</div>
                     </li>
                   ))}
                 </ul>

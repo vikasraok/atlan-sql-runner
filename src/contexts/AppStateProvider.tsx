@@ -1,12 +1,12 @@
 import { useReducer, useRef, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { AppStateContext } from './AppStateContext';
-import type { Tab } from './AppStateContext';
+import type { QueryTab } from '../types';
 import { useTranslation } from '../hooks/useTranslation';
 import type { QueryResult } from '../types';
 
 type State = {
-    tabs: Tab[];
+    tabs: QueryTab[];
     activeId: number;
     showSidebar: boolean;
     showHistory: boolean;

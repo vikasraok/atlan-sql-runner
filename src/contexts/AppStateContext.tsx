@@ -1,10 +1,9 @@
 import { createContext } from 'react';
-import type { QueryResult } from '../types';
+import type { QueryResult, QueryTab } from '../types';
 
-export type Tab = { id: number; title: string; sql?: string; result?: QueryResult; };
 
 export type AppState = {
-    tabs: Tab[];
+    tabs: QueryTab[];
     activeId: number;
     addTab: (query: string, title: string) => void;
     closeTab: (id: number) => void;
