@@ -2,21 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAppState } from "../hooks/useAppState";
 import { historyMockData } from "../mock/historyMockData";
 import { useTranslation } from "../hooks/useTranslation";
-import { mockQueryResults } from '../mock/data';
-import type { QueryResult } from "../types";
 import type { HistoryItem } from "../types";
-
-const fetchMockQueryResult = async (queryId: string): Promise<QueryResult> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockQueryResults[queryId]);
-    }, 500);
-  });
-};
 
 const History: React.FC = () => {
   const { t } = useTranslation();
-  const { addTab, showHistory, toggleHistory, setTabResult, activeId } = useAppState();
+  const { addTab, showHistory, toggleHistory } = useAppState();
   const [searchTerm, setSearchTerm] = useState("");
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
