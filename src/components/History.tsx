@@ -29,7 +29,7 @@ const History: React.FC = () => {
       return item.executor.toLowerCase().includes(userSearch);
     } else if (searchTerm.startsWith("@at:")) {
       const dateSearch = searchTerm.replace("@at:", "");
-      return item.executedAt === dateSearch;
+      return item.executedAt.includes(dateSearch);
     } else {
       return (
         item.query.toLowerCase().includes(searchTerm.toLowerCase()) ||
