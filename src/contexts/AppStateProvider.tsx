@@ -12,7 +12,7 @@ type State = {
 };
 
 type Action =
-    | { type: 'ADD_TAB'; title: string; id: number }
+    | { type: 'ADD_TAB'; title: string; id: number; sql: string } // Added 'sql' property
     | { type: 'CLOSE_TAB'; id: number }
     | { type: 'SET_ACTIVE'; id: number }
     | { type: 'UPDATE_SQL'; id: number; sql: string }
@@ -23,7 +23,7 @@ type Action =
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'ADD_TAB':
-            return { ...state, tabs: [...state.tabs, { id: action.id, title: action.title }], activeId: action.id };
+            return { ...state, tabs: [...state.tabs, { id: action.id, title: action.title, sql: action.sql }], activeId: action.id };
         case 'CLOSE_TAB': {
             const filtered = state.tabs.filter((t) => t.id !== action.id);
             if (filtered.length === 0) {
@@ -71,10 +71,13 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const addTab = useCallback(() => {
-        const id = nextId.current++;
-        dispatch({ type: 'ADD_TAB', id, title: t('tab') });
-    }, [t]);
+    const addTab = useCallback(
+        (query: string) => {
+            const id = nextId.current++;
+            dispatch({ type: 'ADD_TAB', id, title: t('tab'), sql: query });
+        },
+        [t]
+    );
 
     const closeTab = useCallback(
         (id: number) => dispatch({ type: 'CLOSE_TAB', id }),

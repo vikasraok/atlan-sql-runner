@@ -15,7 +15,7 @@ const Tabs: React.FC = () => {
                     aria-selected={tab.id === activeId}
                     aria-label={t("tabLabel")}
                     tabIndex={0}
-                    className={`flex items-center gap-2 py-1 px-3   ${tab.id === activeId ? "bg-white border-blue-500 border-1 border-b-transparent z-15" : "bg-white border-b border border-slate-200 hover:border-blue-400"} rounded-t-md cursor-pointer select-none `}
+                    className={`flex items-center gap-2 py-1 px-3   ${tab.id === activeId ? "bg-white border-blue-500 border border-b-transparent z-15" : "bg-white border-b border border-slate-200 hover:border-blue-400"} rounded-t-md cursor-pointer select-none `}
                     onClick={() => setActiveId(tab.id)}
                 >
                     <span data-testid={`tab-${tab.id}-label`} className="text-sm font-medium text-slate-800 truncate">
@@ -38,7 +38,7 @@ const Tabs: React.FC = () => {
             <button
                 data-testid="add-tab-button"
                 aria-label={t("addTab")}
-                onClick={addTab}
+                onClick={() => addTab("")}
                 className="inline-flex items-center gap-2 px-3 py-1 border border-slate-300 rounded-md text-sm font-medium bg-white hover:bg-slate-50"
             >
                 +

@@ -16,7 +16,7 @@ function AppContent() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50 text-slate-700">
-      <header className="bg-white border-b border-slate-200 shadow-md z-10">
+      <header className="bg-white border-b border-slate-200 shadow-md z-17">
         <div className="flex justify-between items-center px-4 h-16">
           <div className="flex items-center gap-3">
             <Database className="w-6 h-6 text-blue-500" />

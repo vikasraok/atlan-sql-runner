@@ -58,7 +58,7 @@ const Editor: React.FC = () => {
 
   return (
     <form onSubmit={runQuery} className="flex flex-col h-1/3" data-testid="editor">
-      <div className="flex flex-row h-full relative overflow-x-hidden overflow-y-auto bg-white border-slate-200 border z-10 -my-0.25 focus-within:border-blue-500">
+      <div className="flex flex-row h-full relative overflow-x-hidden overflow-y-auto bg-white border-slate-200 border -my-0.25 focus-within:border-blue-500">
         <div ref={gutterRef} className="bg-slate-50 px-2 text-right text-sm text-slate-500 select-none overflow-visible leading-5 shrink-0" style={{ width: 48, paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
           {Array.from({ length: lines }).map((_, i) => (
             <div key={i} className="h-5">{i + 1}</div>

@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-[300px] bg-gray-100 border-r border-gray-300 h-full">
+    <div className="w-[300px] bg-slate-100 border-r border-slate-300 h-full">
       <div className="p-4" data-testid="sidebar">
         <button
           onClick={() => setIsSavedQueriesOpen(!isSavedQueriesOpen)}
@@ -52,13 +52,13 @@ const Sidebar: React.FC = () => {
               placeholder={t('searchQueries')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mb-2"
+              className="w-full p-2 border border-slate-200 rounded mb-2 bg-white"
             />
             <ul className="pl-0">
               {filteredQueries.map((query, index) => (
                 <li
                   key={index}
-                  className="text-gray-600 mb-2 cursor-pointer hover:bg-gray-200 p-2 rounded border border-gray-300"
+                  className="text-gray-600 mb-2 cursor-pointer hover:bg-slate-200 p-2 rounded border border-slate-200"
                   onClick={() => handleQueryClick(query)}
                 >
                   <div className="font-bold">{query.title}</div>

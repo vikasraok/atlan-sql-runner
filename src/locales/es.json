@@ -28,5 +28,8 @@
   "tab2Label": "Pestaña de consulta 2",
   "tab3Label": "Pestaña de consulta 3",
   "noResult": "Sin resultado",
-  "searchQueries": "Buscar consultas..."
+  "searchQueries": "Buscar consultas...",
+  "resultRows": "Filas de Resultado",
+  "executor": "Ejecutor",
+  "date": "Fecha de Ejecución"
 }

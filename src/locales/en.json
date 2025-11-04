@@ -24,5 +24,8 @@
   "addTab": "Add tab",
   "tabLabel": "Query tab",
   "noResult": "No result",
-  "searchQueries": "Search queries..."
+  "searchQueries": "Search queries...",
+  "resultRows": "Result Rows",
+  "executor": "Executor",
+  "date": "Date Executed"
 }
