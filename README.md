@@ -1,75 +1,101 @@
-# React + TypeScript + Vite
+# Atlan SQL Runner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Atlan SQL Runner is a React-based application built with TypeScript and Vite. It provides a user-friendly interface for executing SQL queries, managing query history, and viewing results in real-time.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **SQL Editor**: Write and execute SQL queries with basic syntax validation.
+- **Query History**: View and manage previously executed queries, the results are not populated in this version.
+- **Localization**: Multi-language support using a localization context.
+- **Mock Data**: Simulate query results for testing purposes.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Prerequisites
 
-Note: This will impact Vite dev & build performances.
+Ensure you have the following installed:
 
-## Expanding the ESLint configuration
+- Node.js (>= 16.x)
+- npm or yarn
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone the repository:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   git clone https://github.com/vikasraok/atlan-sql-runner.git
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Navigate to the project directory:
+
+   ```bash
+   cd atlan-sql-runner
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+### Development
+
+Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open your browser and navigate to `http://localhost:3000`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+To create a production build:
+
+```bash
+npm run build
+# or
+yarn build
 ```
+
+### Testing
+
+Run unit and integration tests:
+
+```bash
+npm run test
+# or
+yarn test
+```
+
+## Folder Structure
+
+- `src/components`: React components for the application.
+- `src/contexts`: Context providers for state management and localization.
+- `src/hooks`: Custom hooks for reusable logic.
+- `src/locales`: Localization files.
+- `src/mock`: Mock data for testing.
+- `src/test`: Unit and integration tests.
+- `src/types`: TypeScript type definitions.
+
+## Libraries Used
+
+### Core Libraries
+
+- **React**: For building the user interface.
+- **TypeScript**: For type safety and better developer experience.
+- **Vite**: For fast development and build tooling.
+
+### Additional Libraries
+
+- **ESLint**: For linting and enforcing code quality.
+- **Vitest**: For unit and integration testing.
+- **SlickGrid**: For advanced table management and rendering large datasets efficiently.
+
+## License
+
+This project is licensed under the MIT License.
