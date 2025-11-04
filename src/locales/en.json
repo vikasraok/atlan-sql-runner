@@ -23,5 +23,6 @@
   "selectLanguage": "Select language",
   "addTab": "Add tab",
   "tabLabel": "Query tab",
-  "noResult": "No result"
+  "noResult": "No result",
+  "searchQueries": "Search queries..."
 }
