@@ -26,10 +26,6 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, tabs: [...state.tabs, { id: action.id, title: action.title, sql: action.sql }], activeId: action.id };
         case 'CLOSE_TAB': {
             const filtered = state.tabs.filter((t) => t.id !== action.id);
-            if (filtered.length === 0) {
-                // fallback: create a new tab with id from action (caller should ensure unique id)
-                return { ...state, tabs: [{ id: action.id, title: 'tab' }], activeId: action.id };
-            }
             if (action.id === state.activeId) {
                 const idx = state.tabs.findIndex((x) => x.id === action.id);
                 const prev = state.tabs[idx - 1] ?? filtered[0];
