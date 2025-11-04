@@ -7,3 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
 }
+.slick-header-column {
+  height: 40px !important;
+  line-height: 32px !important;
+}

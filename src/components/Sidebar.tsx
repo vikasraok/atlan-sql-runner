@@ -5,13 +5,12 @@ import { useAppState } from '../hooks/useAppState';
 
 type SavedQuery = {
   title: string;
-  description: string;
+  sql: string;
 };
 
 const Sidebar: React.FC = () => {
   const { t } = useTranslation();
-  const { addTab } = useAppState();
-  const [isSavedQueriesOpen, setIsSavedQueriesOpen] = useState(true);
+  const { showSidebar, updateTab } = useAppState();
   const [searchTerm, setSearchTerm] = useState("");
   const [savedQueries, setSavedQueries] = useState<SavedQuery[]>([]);
   const [loading, setLoading] = useState(false);
@@ -34,20 +33,14 @@ const Sidebar: React.FC = () => {
   );
 
   const handleQueryClick = (query: SavedQuery) => {
-    addTab(query.description, query.title); // Pass title as tab title
+    updateTab(query.title, query.sql); // Pass title as tab title
   };
 
   return (
     <div className="w-[300px] bg-slate-100 border-r border-slate-300 h-full">
-      <div className="p-4" data-testid="sidebar">
-        <button
-          onClick={() => setIsSavedQueriesOpen(!isSavedQueriesOpen)}
-          className="w-full text-left font-bold text-gray-700"
-        >
-          {t('savedQueries')}
-        </button>
-        {isSavedQueriesOpen && (
-          <div className="mt-2">
+      <div className="px-4 py-2" data-testid="sidebar">
+        {showSidebar && (
+          <div >
             {loading ? (
               <div className="flex justify-center items-center h-full">
                 <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600" role="status">
@@ -71,7 +64,7 @@ const Sidebar: React.FC = () => {
                       onClick={() => handleQueryClick(query)}
                     >
                       <div className="font-bold">{query.title}</div>
-                      <div className="text-sm text-gray-500">{query.description}</div>
+                      <div className="text-sm text-gray-500">{query.sql}</div>
                     </li>
                   ))}
                 </ul>

@@ -71,7 +71,7 @@ const History: React.FC = () => {
     <>
       {showHistory && (
         <div className="fixed top-16 right-0 w-1/3 h-[calc(100%-64px)] bg-white shadow-lg border-l border-slate-300 overflow-y-auto z-16">
-          <div className="p-4">
+          <div className="px-4 py-2">
             {loading ? (
               <div className="flex justify-center items-center h-full">
                 <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600" role="status">

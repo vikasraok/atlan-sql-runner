@@ -4,7 +4,7 @@ export interface QueryResult{
     id: string;
     query: string;
     columns: string[];
-    result: Record<string, unknown>[];
+    result: { [key: string]: unknown }[];
     executedAt: number;
     executionTime: number;
     rowCount: number;
