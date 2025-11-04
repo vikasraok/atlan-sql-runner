@@ -72,6 +72,34 @@ npm run test
 yarn test
 ```
 
+## Deployment
+
+### Deploying with Vercel
+
+To deploy the Atlan SQL Runner application using Vercel, follow these steps:
+
+1. Install the Vercel CLI:
+
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Log in to your Vercel account:
+
+   ```bash
+   vercel login
+   ```
+
+3. Deploy the application:
+
+   ```bash
+   vercel
+   ```
+
+4. Follow the prompts to configure your project. Once completed, your application will be deployed, and you will receive a deployment URL.
+
+For more details, visit the [Vercel documentation](https://vercel.com/docs).
+
 ## Folder Structure
 
 - `src/components`: React components for the application.
