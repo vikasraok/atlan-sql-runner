@@ -10,6 +10,7 @@ export type AppState = {
     closeTab: (id: number) => void;
     setActiveId: (id: number) => void;
     updateTabSql: (id: number, sql: string) => void;
+    setTabResult: (id: number, result: unknown[]) => void;
     showSidebar: boolean;
     toggleSidebar: () => void;
     showHistory: boolean;

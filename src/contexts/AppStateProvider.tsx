@@ -16,6 +16,7 @@ type Action =
     | { type: 'CLOSE_TAB'; id: number }
     | { type: 'SET_ACTIVE'; id: number }
     | { type: 'UPDATE_SQL'; id: number; sql: string }
+    | { type: 'SET_RESULT'; id: number; result: unknown[] }
     | { type: 'TOGGLE_SIDEBAR' }
     | { type: 'TOGGLE_HISTORY' };
 
@@ -41,6 +42,11 @@ const reducer = (state: State, action: Action): State => {
         case 'UPDATE_SQL': {
             const { id, sql } = action;
             const tabs = state.tabs.map((t) => (t.id === id ? { ...t, sql } : t));
+            return { ...state, tabs };
+        }
+        case 'SET_RESULT': {
+            const { id, result } = action;
+            const tabs = state.tabs.map((t) => (t.id === id ? { ...t, result } : t));
             return { ...state, tabs };
         }
         case 'TOGGLE_SIDEBAR':
@@ -80,6 +86,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const toggleSidebar = useCallback(() => dispatch({ type: 'TOGGLE_SIDEBAR' }), []);
     const toggleHistory = useCallback(() => dispatch({ type: 'TOGGLE_HISTORY' }), []);
     const updateTabSql = useCallback((id: number, sql: string) => dispatch({ type: 'UPDATE_SQL', id, sql }), []);
+    const setTabResult = useCallback((id: number, result: unknown[]) => dispatch({ type: 'SET_RESULT', id, result }), []);
 
     const value = useMemo(
         () => ({
@@ -89,12 +96,13 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             closeTab,
             setActiveId,
             updateTabSql,
+            setTabResult,
             showSidebar: state.showSidebar,
             toggleSidebar,
             showHistory: state.showHistory,
             toggleHistory,
         }),
-        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory, updateTabSql]
+        [state, addTab, closeTab, setActiveId, toggleSidebar, toggleHistory, updateTabSql, setTabResult]
     );
 
     return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;

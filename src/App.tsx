@@ -54,20 +54,16 @@ function AppContent() {
           </div>
         </div>
       </header>
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex h-full">
         {showSidebar && (
           <div data-testid="sidebar-container">
             <Sidebar />
           </div>
         )}
-        <main className="flex-1 flex flex-col overflow-hidden mx-2 gap-1 min-w-0">
+        <main className="flex-1 flex flex-col m-2 min-w-0 relative ">
           <Tabs />
-          <section className='flex-1 min-w-0' >
-            <Editor />
-          </section>
-          <section className="flex-2 overflow-hidden">
-            <Result />
-          </section>
+          <Editor />
+          <Result />
         </main>
         {showHistory && (
           <div data-testid="history-container">
@@ -75,7 +71,7 @@ function AppContent() {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
 
