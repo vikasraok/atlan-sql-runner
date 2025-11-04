@@ -27,5 +27,6 @@
   "searchQueries": "Search queries...",
   "resultRows": "Result Rows",
   "executor": "Executor",
-  "date": "Date Executed"
+  "date": "Date Executed",
+  "searchHint": "Use @user, @at, @query for advanced search"
 }

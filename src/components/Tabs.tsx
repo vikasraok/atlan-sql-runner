@@ -19,7 +19,7 @@ const Tabs: React.FC = () => {
                     onClick={() => setActiveId(tab.id)}
                 >
                     <span data-testid={`tab-${tab.id}-label`} className="text-sm font-medium text-slate-800 truncate">
-                        {tab.title}
+                        {tab.title.length > 20 ? `${tab.title.substring(0, 20)}...` : tab.title}
                     </span>
                     <button
                         data-testid={`tab-${tab.id}-close`}
@@ -38,7 +38,7 @@ const Tabs: React.FC = () => {
             <button
                 data-testid="add-tab-button"
                 aria-label={t("addTab")}
-                onClick={() => addTab("")}
+                onClick={() => addTab("", t("tab"))}
                 className="inline-flex items-center gap-2 px-3 py-1 border border-slate-300 rounded-md text-sm font-medium bg-white hover:bg-slate-50"
             >
                 +

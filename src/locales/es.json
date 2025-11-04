@@ -31,5 +31,6 @@
   "searchQueries": "Buscar consultas...",
   "resultRows": "Filas de Resultado",
   "executor": "Ejecutor",
-  "date": "Fecha de Ejecución"
+  "date": "Fecha de Ejecución",
+  "searchHint": "Usa @user, @at, @query para búsqueda avanzada"
 }

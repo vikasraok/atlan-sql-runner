@@ -72,11 +72,11 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const addTab = useCallback(
-        (query: string) => {
+        (query: string, title: string) => {
             const id = nextId.current++;
-            dispatch({ type: 'ADD_TAB', id, title: t('tab'), sql: query });
+            dispatch({ type: 'ADD_TAB', id, title, sql: query });
         },
-        [t]
+        []
     );
 
     const closeTab = useCallback(

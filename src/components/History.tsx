@@ -12,7 +12,7 @@ interface HistoryItem {
 
 const History: React.FC = () => {
   const { t } = useTranslation();
-  const { addTab, showHistory } = useAppState(); // Added showHistory from AppState
+  const { addTab, showHistory, toggleHistory } = useAppState();
   const [searchTerm, setSearchTerm] = useState("");
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -47,25 +47,42 @@ const History: React.FC = () => {
   });
 
   const handleCardClick = (query: string) => {
-    addTab(query);
+    addTab(query, query);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const historyDrawer = document.querySelector('.fixed.top-16.right-0');
+      if (historyDrawer && !historyDrawer.contains(event.target as Node)) {
+        toggleHistory();
+      }
+    };
+
+    if (showHistory) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showHistory, toggleHistory]);
 
   return (
     <>
       {showHistory && (
-        <div className="fixed top-16 right-0 w-1/2 h-[calc(100%-64px)] bg-white shadow-lg border-l border-slate-300 overflow-y-auto z-16">
+        <div className="fixed top-16 right-0 w-1/3 h-[calc(100%-64px)] bg-white shadow-lg border-l border-slate-300 overflow-y-auto z-16">
           <div className="p-4">
             {loading ? (
               <div className="flex justify-center items-center h-full">
                 <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600" role="status">
-                  <span className="sr-only">Loading...</span>
+                  <span className="sr-only">{t('loading')}</span>
                 </div>
               </div>
             ) : (
               <>
                 <input
                   type="text"
-                  placeholder={t("searchQueries")}
+                  placeholder={t('searchHint')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded mb-4"
