@@ -1,16 +1,15 @@
 import type { QueryResult } from '../types';
 import {historyMockData} from './historyMockData';
 
-// Generate large dataset for performance testing
 export const generateMockData = (rowCount: number = 1000) => {
   const data = [];
   const firstNames = ['John', 'Jane', 'Bob', 'Alice', 'Charlie', 'Diana', 'Eva', 'Frank', 'Grace', 'Henry'];
   const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
   const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
-  
+
   for (let i = 1; i <= rowCount; i++) {
     data.push({
-      id: i, // Ensure unique 'id' property
+      id: i, 
       first_name: firstNames[Math.floor(Math.random() * firstNames.length)],
       last_name: lastNames[Math.floor(Math.random() * lastNames.length)],
       email: `user${i}@example.com`,
@@ -21,6 +20,7 @@ export const generateMockData = (rowCount: number = 1000) => {
       created_at: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
     });
   }
+
   return data;
 };
 

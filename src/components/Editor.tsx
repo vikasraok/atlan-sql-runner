@@ -11,18 +11,18 @@ const fetchQueryResult = async (queryId: string): Promise<QueryResult> => {
       if (result) {
         resolve({
           id: queryId.toString(),
-          query: '', // Add the SQL query that was executed
+          query: '',
           columns: result?.columns,
           result: result?.data,
           executedAt: new Date().getTime() - 1000,
-          executionTime: 500, // Mock execution time,
+          executionTime: 500,
           rowCount: result?.data?.length,
 
         });
       } else {
         reject(new Error(`Query with ID ${queryId} not found.`));
       }
-    }, 500); // Simulate network delay
+    }, 500);
   });
 };
 
@@ -41,8 +41,8 @@ const Editor: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
-  const [queryId, setQueryId] = useState<number | null>(null); // Track query ID
-  const [isExecuting, setIsExecuting] = useState(false); // Track query execution state
+  const [queryId, setQueryId] = useState<number | null>(null);
+  const [isExecuting, setIsExecuting] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const onChange = useCallback(
@@ -78,18 +78,18 @@ const Editor: React.FC = () => {
         return;
       }
 
-      setIsExecuting(true); // Show progress bar
+      setIsExecuting(true);
       try {
-        const result = await fetchQueryResult(String(queryId)); // Ensure queryId is passed as a string
+        const result = await fetchQueryResult(String(queryId));
         setTabResult(active.id, result);
         updateTab(active.sql ?? '', active.sql ?? '');
       } catch (error) {
         console.error(error);
       } finally {
-        setIsExecuting(false); // Hide progress bar
+        setIsExecuting(false);
       }
     },
-    [active, setTabResult, queryId, updateTab] // Added updateTab to the dependency array
+    [active, setTabResult, queryId, updateTab]
   );
 
   const isButtonDisabled = !active?.sql || !!error;
@@ -117,7 +117,6 @@ const Editor: React.FC = () => {
           name="editor"
         />
 
-        {/* Show progress bar or play button based on execution state */}
         {isExecuting ? (
           <div className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center">
             <div className="w-6 h-6 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />

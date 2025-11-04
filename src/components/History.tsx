@@ -10,7 +10,7 @@ const fetchMockQueryResult = async (queryId: string): Promise<QueryResult> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockQueryResults[queryId]);
-    }, 500); // Simulate network delay
+    }, 500);
   });
 };
 
@@ -22,7 +22,7 @@ const History: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const fetchHistoryData = async () => {
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
     setHistoryData(historyMockData);
     setLoading(false);
   };
@@ -53,7 +53,6 @@ const History: React.FC = () => {
   })
   const handleCardClick = (item: HistoryItem) => {
     addTab(item.query, item.query)
-    // Wait for the state to update before fetching the query result
     setTimeout(() => {
       fetchMockQueryResult(item.id).then((queryData) => {
         if (queryData) {
@@ -61,7 +60,7 @@ const History: React.FC = () => {
           setTabResult(activeId, queryData);
         }
       });
-    }, 0); // Use a timeout to ensure state update is complete
+    }, 0);
   };
 
 

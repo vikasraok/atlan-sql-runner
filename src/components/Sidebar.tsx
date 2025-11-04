@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
   );
 
   const handleQueryClick = (query: SavedQuery) => {
-    updateTab(query.title, query.query); // Pass title as tab title
+    updateTab(query.title, query.query);
   };
 
   return (
