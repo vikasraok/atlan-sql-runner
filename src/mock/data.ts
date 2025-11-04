@@ -45,12 +45,36 @@ export const generateLargeMockData = (rowCount: number = 1000000) => {
   };
 };
 
-export const mockQueryResults: Record<string, QueryResult> = { 
+export const generateUniqueMockData = (rowCount: number = 1000, startId: number = 1) => {
+  const data = [];
+  const firstNames = ['John', 'Jane', 'Bob', 'Alice', 'Charlie', 'Diana', 'Eva', 'Frank', 'Grace', 'Henry'];
+  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+  const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
+
+  for (let i = 0; i < rowCount; i++) {
+    data.push({
+      id: startId + i, // Ensure unique IDs by starting from a given ID
+      first_name: firstNames[Math.floor(Math.random() * firstNames.length)],
+      last_name: lastNames[Math.floor(Math.random() * lastNames.length)],
+      email: `user${startId + i}@example.com`,
+      city: cities[Math.floor(Math.random() * cities.length)],
+      age: Math.floor(Math.random() * 50) + 20,
+      salary: Math.floor(Math.random() * 100000) + 30000,
+      department: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'][Math.floor(Math.random() * 5)],
+      created_at: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
+    });
+  }
+
+  return data;
+};
+
+// Replace existing mock data generation with the new function
+export const mockQueryResults: Record<string, QueryResult> = {
   '1': {
     id: '1',
     query: historyMockData[0].query,
     columns: ['id', 'first_name', 'last_name', 'email', 'city', 'age', 'created_at'],
-    result: generateMockData(50),
+    result: generateUniqueMockData(50, 1),
     executionTime: 120,
     rowCount: 50,
     executedAt: Date.now()
@@ -75,11 +99,11 @@ export const mockQueryResults: Record<string, QueryResult> = {
     query: historyMockData[2].query,
     columns: ['month', 'order_count', 'total_sales'],
     result: [
-      { month: '2024-02', order_count: 145, total_sales: 45600.75 },
-      { month: '2024-01', order_count: 132, total_sales: 38950.25 },
-      { month: '2023-12', order_count: 178, total_sales: 52300.00 },
-      { month: '2023-11', order_count: 156, total_sales: 41200.50 },
-      { month: '2023-10', order_count: 134, total_sales: 36800.25 }
+      { id: 2001, month: '2024-02', order_count: 145, total_sales: 45600.75 },
+      { id: 2002, month: '2024-01', order_count: 132, total_sales: 38950.25 },
+      { id: 2003, month: '2023-12', order_count: 178, total_sales: 52300.00 },
+      { id: 2004, month: '2023-11', order_count: 156, total_sales: 41200.50 },
+      { id: 2005, month: '2023-10', order_count: 134, total_sales: 36800.25 }
     ],
     executionTime: 65,
     rowCount: 5,
@@ -90,11 +114,11 @@ export const mockQueryResults: Record<string, QueryResult> = {
     query: historyMockData[3].query,
     columns: ['name', 'times_ordered', 'total_quantity', 'avg_price'],
     result: [
-      { name: 'Wireless Headphones', times_ordered: 89, total_quantity: 156, avg_price: 79.99 },
-      { name: 'Smartphone Case', times_ordered: 76, total_quantity: 134, avg_price: 24.99 },
-      { name: 'Bluetooth Speaker', times_ordered: 65, total_quantity: 98, avg_price: 49.99 },
-      { name: 'USB Cable', times_ordered: 54, total_quantity: 87, avg_price: 12.99 },
-      { name: 'Power Bank', times_ordered: 43, total_quantity: 65, avg_price: 34.99 }
+      { id: 3001, name: 'Wireless Headphones', times_ordered: 89, total_quantity: 156, avg_price: 79.99 },
+      { id: 3002, name: 'Smartphone Case', times_ordered: 76, total_quantity: 134, avg_price: 24.99 },
+      { id: 3003, name: 'Bluetooth Speaker', times_ordered: 65, total_quantity: 98, avg_price: 49.99 },
+      { id: 3004, name: 'USB Cable', times_ordered: 54, total_quantity: 87, avg_price: 12.99 },
+      { id: 3005, name: 'Power Bank', times_ordered: 43, total_quantity: 65, avg_price: 34.99 }
     ],
     executionTime: 95,
     rowCount: 5,

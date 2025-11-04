@@ -48,19 +48,9 @@ const History: React.FC = () => {
       );
     }
   });
-  useEffect(() => {
-
-  })
   const handleCardClick = (item: HistoryItem) => {
     addTab(item.query, item.query)
-    setTimeout(() => {
-      fetchMockQueryResult(item.id).then((queryData) => {
-        if (queryData) {
-          console.log('Fetched query data:', queryData, activeId);
-          setTabResult(activeId, queryData);
-        }
-      });
-    }, 0);
+    alert('Query added to a new tab. Result population is not implemented in this version.');
   };
 
 
