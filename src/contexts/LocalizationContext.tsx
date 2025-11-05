@@ -25,7 +25,12 @@ export const LocalizationProvider: React.FC<LocalizationProviderProps> = ({
     const [locale, setLocale] = useState<Locale>(defaultLocale);
 
     const t = (key: TranslationKey): string => {
-        return locales[locale][key as keyof typeof locales[typeof locale]];
+        const translation = locales[locale][key as keyof typeof locales[typeof locale]];
+        if (!translation) {
+            console.warn(`Missing translation for key: "${key}" in locale: "${locale}"`);
+            return key; // Fallback to the key itself
+        }
+        return translation;
     };
 
     return (
