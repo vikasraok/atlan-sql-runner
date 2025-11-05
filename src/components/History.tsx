@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAppState } from "../hooks/useAppState";
-import { historyMockData } from "../mock/historyMockData";
+import { historyMockData, mockMap, initializeMockMap } from "../mock/historyMockData";
 import { useTranslation } from "../hooks/useTranslation";
 import type { HistoryItem } from "../types";
 
 const History: React.FC = () => {
   const { t } = useTranslation();
-  const { addTab, showHistory, toggleHistory } = useAppState();
+  const { addTab, showHistory, toggleHistory, tabs, setTabResult } = useAppState();
   const [searchTerm, setSearchTerm] = useState("");
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const prevTabsRef = useRef(tabs);
+
   const fetchHistoryData = async () => {
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
     setHistoryData(historyMockData);
     setLoading(false);
   };
+
   useEffect(() => {
     fetchHistoryData();
+    initializeMockMap();
   }, []);
 
   const filteredHistory = historyData.filter((item) => {
@@ -39,10 +43,31 @@ const History: React.FC = () => {
     }
   });
   const handleCardClick = (item: HistoryItem) => {
-    addTab(item.query, item.query)
-    alert('Query added to a new tab. Result population is not implemented in this version.');
+    addTab(item.query, item.query, parseInt(item.id));
   };
 
+  useEffect(() => {
+    const prevTabs = prevTabsRef.current;
+    const currentTabs = tabs;
+    const addedTabs = currentTabs.filter(tab => !prevTabs.some(prevTab => prevTab.id === tab.id));
+    addedTabs.forEach(tab => {
+      const tabId = String(tab.id); // Convert to string
+      if (mockMap.has(tabId)) {
+        const result = mockMap.get(tabId)?.();
+        setTabResult(tab.id, {
+          id: tab.id.toString(),
+          query: tab.sql ?? '',
+          columns: result?.columns ?? [],
+          result: result?.data ?? [],
+          executedAt: new Date().getTime() - 1000,
+          executionTime: 500,
+          rowCount: result?.data?.length ?? 0,
+        });
+      }
+    });
+
+    prevTabsRef.current = currentTabs;
+  }, [setTabResult, tabs]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

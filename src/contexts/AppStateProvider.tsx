@@ -25,6 +25,9 @@ type Action =
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'ADD_TAB':
+            if (state.tabs.find((tab) => tab.id === action.id)) {
+                return { ...state, activeId: action.id };
+            }
             return { ...state, tabs: [...state.tabs, { id: action.id, title: action.title, sql: action.sql }], activeId: action.id };
         case 'UPDATE_TAB': {
             const updatedTabs = state.tabs.map((tab) =>
@@ -76,8 +79,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const addTab = useCallback(
-        (query: string, title: string) => {
-            const id = nextId.current++;
+        (query: string, title: string, id: number = nextId.current++) => {
             dispatch({ type: 'ADD_TAB', id, title, sql: query });
         },
         []

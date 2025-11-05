@@ -1,28 +1,4 @@
-import type { QueryResult } from '../types';
-import {historyMockData} from './historyMockData';
 
-export const generateMockData = (rowCount: number = 1000) => {
-  const data = [];
-  const firstNames = ['John', 'Jane', 'Bob', 'Alice', 'Charlie', 'Diana', 'Eva', 'Frank', 'Grace', 'Henry'];
-  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
-  const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
-
-  for (let i = 1; i <= rowCount; i++) {
-    data.push({
-      id: i, 
-      first_name: firstNames[Math.floor(Math.random() * firstNames.length)],
-      last_name: lastNames[Math.floor(Math.random() * lastNames.length)],
-      email: `user${i}@example.com`,
-      city: cities[Math.floor(Math.random() * cities.length)],
-      age: Math.floor(Math.random() * 50) + 20,
-      salary: Math.floor(Math.random() * 100000) + 30000,
-      department: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'][Math.floor(Math.random() * 5)],
-      created_at: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
-    });
-  }
-
-  return data;
-};
 
 export const generateLargeMockData = (rowCount: number = 1000000) => {
   const data = [];
@@ -45,83 +21,54 @@ export const generateLargeMockData = (rowCount: number = 1000000) => {
   };
 };
 
-export const generateUniqueMockData = (rowCount: number = 1000, startId: number = 1) => {
-  const data = [];
-  const firstNames = ['John', 'Jane', 'Bob', 'Alice', 'Charlie', 'Diana', 'Eva', 'Frank', 'Grace', 'Henry'];
-  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
-  const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
 
-  for (let i = 0; i < rowCount; i++) {
+export const generateCustomerData = (rowCount: number = 1000000) => {
+  const data = [];
+  for (let i = 1; i <= rowCount; i++) {
     data.push({
-      id: startId + i, // Ensure unique IDs by starting from a given ID
-      first_name: firstNames[Math.floor(Math.random() * firstNames.length)],
-      last_name: lastNames[Math.floor(Math.random() * lastNames.length)],
-      email: `user${startId + i}@example.com`,
-      city: cities[Math.floor(Math.random() * cities.length)],
-      age: Math.floor(Math.random() * 50) + 20,
-      salary: Math.floor(Math.random() * 100000) + 30000,
-      department: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'][Math.floor(Math.random() * 5)],
-      created_at: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
+      id: i,
+      first_name: `FirstName${i}`,
+      last_name: `LastName${i}`,
+      email: `customer${i}@example.com`,
+      city: `City${i}`,
+      created_at: new Date(2025, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString()
     });
   }
-
-  return data;
+  return {
+    columns: ['id', 'first_name', 'last_name', 'email', 'city', 'created_at'],
+    data: data
+  };
 };
 
-// Replace existing mock data generation with the new function
-export const mockQueryResults: Record<string, QueryResult> = {
-  '1': {
-    id: '1',
-    query: historyMockData[0].query,
-    columns: ['id', 'first_name', 'last_name', 'email', 'city', 'age', 'created_at'],
-    result: generateUniqueMockData(50, 1),
-    executionTime: 120,
-    rowCount: 50,
-    executedAt: Date.now()
-  },
-  '2': {
-    id: '2',
-    query: historyMockData[1].query,
-    columns: ['id', 'customer_name', 'total_amount', 'order_date'],
-    result: [
-      { id: 1001, customer_name: 'Alice Johnson', total_amount: 2500.00, order_date: '2024-01-15' },
-      { id: 1002, customer_name: 'Bob Smith', total_amount: 1850.75, order_date: '2024-01-20' },
-      { id: 1003, customer_name: 'Charlie Brown', total_amount: 1650.25, order_date: '2024-02-01' },
-      { id: 1004, customer_name: 'Diana Wilson', total_amount: 1420.50, order_date: '2024-02-05' },
-      { id: 1005, customer_name: 'Eva Martinez', total_amount: 1200.00, order_date: '2024-02-10' }
-    ],
-    executionTime: 85,
-    rowCount: 5,
-    executedAt: Date.now()
-  },
-  '3': {
-    id: '3',
-    query: historyMockData[2].query,
-    columns: ['month', 'order_count', 'total_sales'],
-    result: [
-      { id: 2001, month: '2024-02', order_count: 145, total_sales: 45600.75 },
-      { id: 2002, month: '2024-01', order_count: 132, total_sales: 38950.25 },
-      { id: 2003, month: '2023-12', order_count: 178, total_sales: 52300.00 },
-      { id: 2004, month: '2023-11', order_count: 156, total_sales: 41200.50 },
-      { id: 2005, month: '2023-10', order_count: 134, total_sales: 36800.25 }
-    ],
-    executionTime: 65,
-    rowCount: 5,
-    executedAt: Date.now()
-  },
-  '4': {
-    id: '4',
-    query: historyMockData[3].query,
-    columns: ['name', 'times_ordered', 'total_quantity', 'avg_price'],
-    result: [
-      { id: 3001, name: 'Wireless Headphones', times_ordered: 89, total_quantity: 156, avg_price: 79.99 },
-      { id: 3002, name: 'Smartphone Case', times_ordered: 76, total_quantity: 134, avg_price: 24.99 },
-      { id: 3003, name: 'Bluetooth Speaker', times_ordered: 65, total_quantity: 98, avg_price: 49.99 },
-      { id: 3004, name: 'USB Cable', times_ordered: 54, total_quantity: 87, avg_price: 12.99 },
-      { id: 3005, name: 'Power Bank', times_ordered: 43, total_quantity: 65, avg_price: 34.99 }
-    ],
-    executionTime: 95,
-    rowCount: 5,
-    executedAt: Date.now()
+export const generateOrderData = (rowCount: number = 1000000) => {
+  const data = [];
+  for (let i = 1; i <= rowCount; i++) {
+    data.push({
+      id: i,
+      customer_id: Math.floor(Math.random() * rowCount) + 1,
+      total_amount: Math.random() * 1000,
+      order_date: new Date(2025, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString()
+    });
   }
+  return {
+    columns: ['id', 'customer_id', 'total_amount', 'order_date'],
+    data: data
+  };
 };
+
+export const generateProductData = (rowCount: number = 1000000) => {
+  const data = [];
+  for (let i = 1; i <= rowCount; i++) {
+    data.push({
+      id: i,
+      name: `Product${i}`,
+      price: Math.random() * 100,
+      stock: Math.floor(Math.random() * 1000)
+    });
+  }
+  return {
+    columns: ['id', 'name', 'price', 'stock'],
+    data: data
+  };
+};
+
